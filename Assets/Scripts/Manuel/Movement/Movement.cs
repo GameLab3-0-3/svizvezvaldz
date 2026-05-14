@@ -11,6 +11,8 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         inputActions = new InputMap();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         if(instance != null)
         {
             Destroy(instance);
@@ -38,5 +40,8 @@ public class Movement : MonoBehaviour
         Vector2 movementInput = inputActions.Player.Movement.ReadValue<Vector2>(); 
         Vector3 movement = rb.position + new Vector3(movementInput.x, 0, movementInput.y) * speed * Time.fixedDeltaTime;
         rb.position = movement;
+
+        Vector3 lookAt = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized;
+        transform.forward = lookAt;
     }
 }
