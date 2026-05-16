@@ -38,10 +38,11 @@ public class GameManager : MonoBehaviour
     }
     public void Loop()
     {
-        if (counter > 0)
-        {
+        if (counter > 0 && !anomaly)
             counter--;
-        }
+
+        else if (counter > 0 && anomaly)
+            counter++;
 
         if (counter < maxCounter)
             exitTrigger.SetActive(true);
