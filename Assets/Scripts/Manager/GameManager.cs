@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject exitTrigger;
     [Tooltip("Questo è il trigger che decide se andare avanti o dietro, attivva/disattiva il bool, decide quale anomalia deve esserci (se il bool è attivo) e ti teletrasporta all'entrata se torni indietro")]
     public GameObject anomalyChooser;
+    [Tooltip("questa è la light source che si attiva una volta che sei passato x volte (dove x è il maxCounter), funziona come trigger per i titoli di coda")]
+    public GameObject lightSource;
     [Tooltip("bool utilizzato per far sapere al gioco se o meno nel corridoio ci sono anomalie")]
     public bool anomaly;
 
@@ -66,10 +69,7 @@ public class GameManager : MonoBehaviour
         //se non sono presenti anomalie il trigger ti aumenta il counter e nel caso in cui il counter raggiunge il massimo disattiva l'uscita
         if (!anomaly)
         {
-            counter++;
-            if (counter > maxCounter) counter = maxCounter;
-            if (counter == maxCounter)
-                exitTrigger.SetActive(false);
+            StartCoroutine(CorridorCounter());
         }
         //se è presente un'anomalia resetta il counter (skill issue negro)
         else
@@ -84,9 +84,18 @@ public class GameManager : MonoBehaviour
         counter++;
         if (counter > maxCounter) counter = maxCounter;
         if (counter == maxCounter)
+        {
+            anomalyChooser.SetActive(false);
             exitTrigger.SetActive(false);
+            lightSource.SetActive(true);
+        }
         yield return new WaitForSeconds(1);
         anomaly = false;
+    }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
     }
     #endregion
 }
