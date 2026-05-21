@@ -1038,9 +1038,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   enterTrigger: {fileID: 1510895441}
   exitTrigger: {fileID: 1358196152}
+  anomalyChooser: {fileID: 0}
+  lightSource: {fileID: 0}
   anomaly: 0
   maxCounter: 8
   counter: 0
+  triggerCounter: 0
 --- !u!1 &352274473
 GameObject:
   m_ObjectHideFlags: 0
