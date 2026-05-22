@@ -1144,7 +1144,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1558773353430357035, guid: f98d1c395589baf49a3e11f1718bb0a4, type: 3}
       propertyPath: m_Name
-      value: Posters Alt
+      value: Posters Set Alt
       objectReference: {fileID: 0}
     - target: {fileID: 1558773353430357035, guid: f98d1c395589baf49a3e11f1718bb0a4, type: 3}
       propertyPath: m_IsActive
@@ -1259,12 +1259,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f101a9220b48b48bb172dbd60c30bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Anomalies
-  Poster2_Normal: {fileID: 1933657826}
-  Poster4_Normal: {fileID: 95471428}
-  PosterSet_Normal: {fileID: 599469068}
-  Poster2_ALt: {fileID: 136647209}
-  Poster4_Alt: {fileID: 1169403659}
-  PosterSet_Alt: {fileID: 480788274}
+  poster2_Normal: {fileID: 1933657826}
+  poster4_Normal: {fileID: 95471428}
+  posterSet_Normal: {fileID: 599469068}
+  eyePoster_Normal: {fileID: 787770758}
+  poster2_ALt: {fileID: 136647209}
+  poster4_Alt: {fileID: 1169403659}
+  posterSet_Alt: {fileID: 480788274}
+  eyePoster_Alt: {fileID: 1532149922}
 --- !u!1 &607574542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,6 +1940,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750949727}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &787770758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3060936365088695580, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
+  m_PrefabInstance: {fileID: 3865393929471356700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &809659727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2086,8 +2093,8 @@ Transform:
   - {fileID: 1527522435}
   - {fileID: 607574543}
   - {fileID: 990271264}
-  - {fileID: 599469069}
   - {fileID: 480788275}
+  - {fileID: 599469069}
   m_Father: {fileID: 1904185881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
@@ -2283,6 +2290,7 @@ Transform:
   m_Children:
   - {fileID: 342731126}
   - {fileID: 606842720}
+  - {fileID: 1277715020}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &990271263
@@ -2586,12 +2594,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277715017}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 975482416}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358196152
 GameObject:
@@ -3136,6 +3144,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527522434}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1532149922 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7594317704735435938, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
+  m_PrefabInstance: {fileID: 3865393929471356700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1581605888
 GameObject:
   m_ObjectHideFlags: 0
@@ -4100,8 +4113,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1558773353430357035, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
       propertyPath: m_Name
-      value: Posters
+      value: Posters Set
       objectReference: {fileID: 0}
+    - target: {fileID: 1614327303326965587, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b1514b94a2085a74ea5f945c1d931815, type: 2}
     - target: {fileID: 2315395244254169890, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4142,6 +4159,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3060936365088695580, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
+      propertyPath: m_Name
+      value: Eye poster Notrmal
+      objectReference: {fileID: 0}
+    - target: {fileID: 3060936365088695580, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594317704735435938, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4159,4 +4188,3 @@ SceneRoots:
   - {fileID: 1904185881}
   - {fileID: 975482416}
   - {fileID: 253238822}
-  - {fileID: 1277715020}

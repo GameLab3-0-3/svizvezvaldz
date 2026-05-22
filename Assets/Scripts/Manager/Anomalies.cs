@@ -3,13 +3,15 @@ using UnityEngine;
 public class Anomalies : MonoBehaviour
 {
     [Header("Posters")]
-    public GameObject Poster2_Normal;
-    public GameObject Poster4_Normal;
-    public GameObject PosterSet_Normal;
+    public GameObject poster2_Normal;
+    public GameObject poster4_Normal;
+    public GameObject posterSet_Normal;
+    public GameObject eyePoster_Normal;
     [Header("----------")]
-    public GameObject Poster2_ALt;
-    public GameObject Poster4_Alt;
-    public GameObject PosterSet_Alt;
+    public GameObject poster2_ALt;
+    public GameObject poster4_Alt;
+    public GameObject posterSet_Alt;
+    public GameObject eyePoster_Alt;
 
     public static Anomalies instance;
     private void Awake()
@@ -43,27 +45,27 @@ public class Anomalies : MonoBehaviour
         {
             GameManager.instance.anomaly = true;
             float type = Random.Range(0, 21);
-            if (type <= 6.66f)
+            if (type <= 5f)
             {
                 Poster2();
                 return;
             }
-            else if (type > 6.66f && type <= 13.33f)
+            else if (type > 5f && type <= 10f)
             {
                 Poster4();
                 return;
             }
-            else if (type > 13.33f && type < 21)
+            else if (type > 10f && type <= 15)
             {
                 GigaPoster();
                 return;
             }
-            /*
-            else if (type == 3)
+            else if (type > 15f && type < 21)
             {
-                Debug.Log("poster occhi");
+                EyePoster();
                 return;
             }
+            /*
             else if (type == 4)
             {
                 Debug.Log("tetto scende");
@@ -155,33 +157,41 @@ public class Anomalies : MonoBehaviour
 
     private void Poster2()
     {
-        Poster2_Normal.SetActive(false);
-        Poster2_ALt.SetActive(true);
+        poster2_Normal.SetActive(false);
+        poster2_ALt.SetActive(true);
     }
     private void Poster4()
     {
-        Poster4_Normal.SetActive(false);
-        Poster4_Alt.SetActive(true);
+        poster4_Normal.SetActive(false);
+        poster4_Alt.SetActive(true);
     }
 
     private void GigaPoster()
     {
-        PosterSet_Normal.SetActive(false);
-        PosterSet_Alt.SetActive(true);
+        posterSet_Normal.SetActive(false);
+        posterSet_Alt.SetActive(true);
+    }
+    private void EyePoster()
+    {
+        eyePoster_Normal.SetActive(false);
+        eyePoster_Alt.SetActive(true);
     }
     #endregion Anomalies
     private void ResetAlt()
     {
-        #region poster2/4
+        #region posters
         //poster 2
-        Poster2_Normal.SetActive(true);
-        Poster2_ALt.SetActive(false);
+        poster2_Normal.SetActive(true);
+        poster2_ALt.SetActive(false);
         //poster 4
-        Poster4_Normal.SetActive(true);
-        Poster4_Alt.SetActive(false);
+        poster4_Normal.SetActive(true);
+        poster4_Alt.SetActive(false);
         //poster Set
-        PosterSet_Normal.SetActive(true);
-        PosterSet_Alt.SetActive(false);
+        posterSet_Normal.SetActive(true);
+        posterSet_Alt.SetActive(false);
+        //poster Set
+        eyePoster_Normal.SetActive(true);
+        eyePoster_Alt.SetActive(false);
         #endregion
     }
 }

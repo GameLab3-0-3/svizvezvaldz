@@ -25,14 +25,12 @@ public class Anomaly_Chooser : MonoBehaviour
             }
             GameManager.instance.triggerCounter++;
             Vector3 relativePos = Player.transform.position - transform.position;
-            Vector3 destinationPos = destination.position + new Vector3(0, relativePos.y, relativePos.z);
-
+            Vector3 destinationPos = destination.position + new Vector3(0 + tpOffset, relativePos.y, relativePos.z);
+            Quaternion destinationRot = Quaternion.Euler(Player.transform.rotation.x, Player.transform.rotation.y + 90, Player.transform.rotation.z);
             if (GameManager.instance.triggerCounter >= 2)
             {
-                destinationPos.x += tpOffset;
-                Player.transform.rotation = Quaternion.Euler(Player.transform.rotation.x,Player.transform.rotation.y + 90,Player.transform.rotation.z);
+                Player.transform.SetPositionAndRotation(destinationPos, destinationRot);
                 GameManager.instance.UpdateChooser();
-                Player.transform.position = destinationPos;
             }
         }
     }

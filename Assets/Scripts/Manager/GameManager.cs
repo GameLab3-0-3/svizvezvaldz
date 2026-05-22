@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
         if (anomaly)
         {
             StartCoroutine(CorridorCounter());
+            OnAltDisabled?.Invoke();
         }
         //se non è presente un'anomalia resetta il counter (skill issue negro)
         else
@@ -79,6 +80,7 @@ public class GameManager : MonoBehaviour
         else
         {
             counter = 0;
+            OnAltDisabled?.Invoke();
         }
         anomaly = false;
     }
@@ -86,7 +88,6 @@ public class GameManager : MonoBehaviour
     IEnumerator CorridorCounter()
     {
         counter++;
-        OnAltDisabled?.Invoke();
         if (counter > maxCounter) counter = maxCounter;
         if (counter == maxCounter)
         {
