@@ -16,6 +16,12 @@ public class Anomalies : MonoBehaviour
     [Header("Enviroment")]
     [SerializeField] GameObject Ceiling;
     Vector3 originalCPos;
+    [SerializeField] GameObject LightChanger;
+    public bool noLight;
+    public bool redLight;
+    [SerializeField] Light GameLight1;
+    [SerializeField] Light GameLight2;
+    [SerializeField] Light GameLight3;
 
     public static Anomalies instance;
     private void Awake()
@@ -31,11 +37,15 @@ public class Anomalies : MonoBehaviour
     {
         Anomaly_Chooser.OnAnomalies += ChooseAnomaly;
         GameManager.OnAltDisabled += ResetAlt;
+        Light_Changer.OnNoLights += NoLight;
+        Light_Changer.OnRedLights += RedLight;
     }
     private void OnDisable()
     {
         Anomaly_Chooser.OnAnomalies -= ChooseAnomaly;
         GameManager.OnAltDisabled -= ResetAlt;
+        Light_Changer.OnNoLights -= NoLight;
+        Light_Changer.OnRedLights -= RedLight;
     }
 
     private void Start()
@@ -53,42 +63,44 @@ public class Anomalies : MonoBehaviour
         {
             GameManager.instance.anomaly = true;
             float type = Random.Range(0, 21);
-            if (type <= 4f)
+            if (type <= 2.85f)
             {
                 Poster2();
                 return;
             }
-            else if (type > 4f && type <= 8f)
+            else if (type > 2.85f && type <= 5.7f)
             {
                 Poster4();
                 return;
             }
-            else if (type > 8f && type <= 12)
+            else if (type > 5.7f && type <= 8.55f)
             {
                 GigaPoster();
                 return;
             }
-            else if (type > 12f && type <= 16)
+            else if (type > 8.55f && type <= 11.4f)
             {
                 EyePoster();
                 return;
             }
-            else if (type > 16f && type < 21)
+            else if (type > 11.4f && type <= 14.25f)
             {
                 CeilingDown();
                 return;
             }
+            else if (type > 14.25f && type <= 17.1f)
+            {
+                LightChanger.SetActive(true);
+                noLight = true;
+                return;
+            }
+            else if (type > 17.1f && type < 21f)
+            {
+                LightChanger.SetActive(true);
+                redLight = true;
+                return;
+            }
             /*
-            else if (type == 5)
-            {
-                Debug.Log("luci rosse");
-                return;
-            }
-            else if (type == 6)
-            {
-                Debug.Log("luci spente");
-                return;
-            }
             else if (type == 7)
             {
                 Debug.Log("segnale uscita al contrario");
@@ -185,16 +197,31 @@ public class Anomalies : MonoBehaviour
         eyePoster_Alt.SetActive(true);
     }
     #endregion
+    #region Enviroment
     private void CeilingDown()
     {
         StartCoroutine(LerpCeiling());
     }
+    private void NoLight()
+    {
+        GameLight1.color = Color.black;
+        GameLight2.color = Color.black;
+        GameLight3.color = Color.black;
+    }
+    private void RedLight()
+    {
+        GameLight1.color = Color.red;
+        GameLight2.color = Color.red;
+        GameLight3.color = Color.red;
+    }
+    #endregion
+
     IEnumerator LerpCeiling()
     {
         Vector3 startPos = Ceiling.transform.position;
-        Vector3 targetPos = new (originalCPos.x, 2, originalCPos.z);
+        Vector3 targetPos = new(originalCPos.x, 2, originalCPos.z);
 
-        float duration = 10f; 
+        float duration = 10f;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -225,6 +252,12 @@ public class Anomalies : MonoBehaviour
         #region Enviroment
         StopAllCoroutines();
         Ceiling.transform.position = originalCPos;
+        LightChanger.SetActive(false);
+        noLight = false;
+        redLight = false;
+        GameLight1.color = Color.white;
+        GameLight2.color = Color.white;
+        GameLight3.color = Color.white;
         #endregion
     }
 }
