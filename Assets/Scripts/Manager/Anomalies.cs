@@ -1,17 +1,21 @@
+using System.Collections;
 using UnityEngine;
 
 public class Anomalies : MonoBehaviour
 {
     [Header("Posters")]
-    public GameObject poster2_Normal;
-    public GameObject poster4_Normal;
-    public GameObject posterSet_Normal;
-    public GameObject eyePoster_Normal;
-    [Header("----------")]
-    public GameObject poster2_ALt;
-    public GameObject poster4_Alt;
-    public GameObject posterSet_Alt;
-    public GameObject eyePoster_Alt;
+    [SerializeField] GameObject poster2_Normal;
+    [SerializeField] GameObject poster4_Normal;
+    [SerializeField] GameObject posterSet_Normal;
+    [SerializeField] GameObject eyePoster_Normal;
+    [Header("Alt Posters")]
+    [SerializeField] GameObject poster2_ALt;
+    [SerializeField] GameObject poster4_Alt;
+    [SerializeField] GameObject posterSet_Alt;
+    [SerializeField] GameObject eyePoster_Alt;
+    [Header("Enviroment")]
+    [SerializeField] GameObject Ceiling;
+    Vector3 originalCPos;
 
     public static Anomalies instance;
     private void Awake()
@@ -34,6 +38,10 @@ public class Anomalies : MonoBehaviour
         GameManager.OnAltDisabled -= ResetAlt;
     }
 
+    private void Start()
+    {
+        originalCPos = Ceiling.transform.position;
+    }
     #region Anomalies
     private void ChooseAnomaly()
     {
@@ -45,32 +53,32 @@ public class Anomalies : MonoBehaviour
         {
             GameManager.instance.anomaly = true;
             float type = Random.Range(0, 21);
-            if (type <= 5f)
+            if (type <= 4f)
             {
                 Poster2();
                 return;
             }
-            else if (type > 5f && type <= 10f)
+            else if (type > 4f && type <= 8f)
             {
                 Poster4();
                 return;
             }
-            else if (type > 10f && type <= 15)
+            else if (type > 8f && type <= 12)
             {
                 GigaPoster();
                 return;
             }
-            else if (type > 15f && type < 21)
+            else if (type > 12f && type <= 16)
             {
                 EyePoster();
                 return;
             }
-            /*
-            else if (type == 4)
+            else if (type > 16f && type < 21)
             {
-                Debug.Log("tetto scende");
+                CeilingDown();
                 return;
             }
+            /*
             else if (type == 5)
             {
                 Debug.Log("luci rosse");
@@ -154,7 +162,7 @@ public class Anomalies : MonoBehaviour
             */
         }
     }
-
+    #region posters
     private void Poster2()
     {
         poster2_Normal.SetActive(false);
@@ -176,6 +184,27 @@ public class Anomalies : MonoBehaviour
         eyePoster_Normal.SetActive(false);
         eyePoster_Alt.SetActive(true);
     }
+    #endregion
+    private void CeilingDown()
+    {
+        StartCoroutine(LerpCeiling());
+    }
+    IEnumerator LerpCeiling()
+    {
+        Vector3 startPos = Ceiling.transform.position;
+        Vector3 targetPos = new (originalCPos.x, 2, originalCPos.z);
+
+        float duration = 10f; 
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            Ceiling.transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        Ceiling.transform.position = targetPos;
+    }
     #endregion Anomalies
     private void ResetAlt()
     {
@@ -192,6 +221,10 @@ public class Anomalies : MonoBehaviour
         //poster Set
         eyePoster_Normal.SetActive(true);
         eyePoster_Alt.SetActive(false);
+        #endregion
+        #region Enviroment
+        StopAllCoroutines();
+        Ceiling.transform.position = originalCPos;
         #endregion
     }
 }
