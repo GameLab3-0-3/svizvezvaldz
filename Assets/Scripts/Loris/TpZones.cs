@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Anomaly_Checks : MonoBehaviour
+public class TpZones : MonoBehaviour
 {
     [Header("Riferimenti")]
     [Tooltip("Qui mettiamo il Player per teletrasportarlo")]
