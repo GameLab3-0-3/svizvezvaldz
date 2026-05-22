@@ -19,12 +19,12 @@ public class Anomalies : MonoBehaviour
     private void OnEnable()
     {
         Anomaly_Chooser.OnAnomalies += ChooseAnomaly;
-        Anomaly_Chooser.OnAltDisabled += ResetAlt;
+        GameManager.OnAltDisabled += ResetAlt;
     }
     private void OnDisable()
     {
         Anomaly_Chooser.OnAnomalies -= ChooseAnomaly;
-        Anomaly_Chooser.OnAltDisabled -= ResetAlt;
+        GameManager.OnAltDisabled -= ResetAlt;
     }
 
     #region Anomalies
@@ -38,16 +38,17 @@ public class Anomalies : MonoBehaviour
         {
             GameManager.instance.anomaly = true;
             float type = Random.Range(0, 21);
-            if (type == 0)
+            if (type <= 10)
             {
                 Poster2();
                 return;
             }
-            else if (type == 1)
+            else if (type > 10 && type <21)
             {
                 Poster4();
                 return;
             }
+            /*
             else if (type == 2)
             {
                 Debug.Log("poster grande");
@@ -143,18 +144,17 @@ public class Anomalies : MonoBehaviour
                 Debug.Log("-.-");
                 return;
             }
+            */
         }
     }
 
     private void Poster2()
     {
-            Debug.Log("Poster2");
-            Poster2Normal.SetActive(false);
-            Poster2ALt.SetActive(true);
+        Poster2Normal.SetActive(false);
+        Poster2ALt.SetActive(true);
     }
     private void Poster4()
     {
-        Debug.Log("Poster4");
         Poster4Normal.SetActive(false);
         Poster4Alt.SetActive(true);
     }

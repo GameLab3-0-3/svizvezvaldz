@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,9 @@ public class GameManager : MonoBehaviour
     public float counter;
     [Tooltip("Counter necessario per sapere quante volte il Player è entrato nell'Anomaly Chooser in modo da far funzionare il Game loop")]
     public int triggerCounter;
+
+
+    public static event Action OnAltDisabled;
 
     public static GameManager instance;
     private void Awake()
@@ -82,6 +86,7 @@ public class GameManager : MonoBehaviour
     IEnumerator CorridorCounter()
     {
         counter++;
+        OnAltDisabled?.Invoke();
         if (counter > maxCounter) counter = maxCounter;
         if (counter == maxCounter)
         {
@@ -89,7 +94,7 @@ public class GameManager : MonoBehaviour
             exitTrigger.SetActive(false);
             lightSource.SetActive(true);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         anomaly = false;
     }
 

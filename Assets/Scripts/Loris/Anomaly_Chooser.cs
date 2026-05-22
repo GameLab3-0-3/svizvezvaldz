@@ -14,7 +14,6 @@ public class Anomaly_Chooser : MonoBehaviour
     public float tpOffset;
 
     public static event Action OnAnomalies;
-    public static event Action OnAltDisabled;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -33,7 +32,6 @@ public class Anomaly_Chooser : MonoBehaviour
                 destinationPos.x += tpOffset;
                 Player.transform.rotation = Quaternion.Euler(Player.transform.rotation.x,Player.transform.rotation.y + 90,Player.transform.rotation.z);
                 GameManager.instance.UpdateChooser();
-                OnAltDisabled?.Invoke();
                 Player.transform.position = destinationPos;
             }
         }
