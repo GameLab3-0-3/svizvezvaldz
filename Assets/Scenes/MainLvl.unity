@@ -771,7 +771,7 @@ MonoBehaviour:
   lightSource: {fileID: 208088356}
   anomaly: 0
   maxCounter: 8
-  counter: 7
+  counter: 0
   triggerCounter: 0
 --- !u!1 &352274473
 GameObject:
