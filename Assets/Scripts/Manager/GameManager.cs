@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         //    counter++;
         //questa ultimo controllo è per evitare, un'altra volta, che il Player possa sfruttare il tp come metodo veloce per finire il gioco. infatti se volesse ritornare indietro, il Player tornerebbe alla fine del corridoio precedente e il trigger d'uscita si riattiverebbe impedendo di andare alla fine senza aver percorso l'ultimo corridoio
         if (counter < maxCounter)
+            anomalyChooser.SetActive(true);
             exitTrigger.SetActive(true);
     }
     public void UpdateChooser()

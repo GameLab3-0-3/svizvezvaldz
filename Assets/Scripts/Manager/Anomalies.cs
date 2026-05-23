@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Anomalies : MonoBehaviour
@@ -22,6 +23,10 @@ public class Anomalies : MonoBehaviour
     [SerializeField] Light GameLight1;
     [SerializeField] Light GameLight2;
     [SerializeField] Light GameLight3;
+
+    [Header("UI")]
+    [SerializeField] TMP_Text anomaly_Text;
+    string anomalyType;
 
     public static Anomalies instance;
     private void Awake()
@@ -51,6 +56,11 @@ public class Anomalies : MonoBehaviour
     private void Start()
     {
         originalCPos = Ceiling.transform.position;
+        anomalyType = "None";
+    }
+    private void Update()
+    {
+        anomaly_Text.text = "Anomaly: " + anomalyType;
     }
     #region Anomalies
     private void ChooseAnomaly()
@@ -58,7 +68,10 @@ public class Anomalies : MonoBehaviour
         int anomaly = Random.Range(0, 101);
         Debug.Log(anomaly);
         if (anomaly <= 50)
+        {
             GameManager.instance.anomaly = false;
+            anomalyType = "None";
+        }
         else if (anomaly > 50 && anomaly <= 100)
         {
             GameManager.instance.anomaly = true;
@@ -90,12 +103,14 @@ public class Anomalies : MonoBehaviour
             }
             else if (type > 14.25f && type <= 17.1f)
             {
+                anomalyType = "No Light";
                 LightChanger.SetActive(true);
                 noLight = true;
                 return;
             }
             else if (type > 17.1f && type < 21f)
             {
+                anomalyType = "Red Light";
                 LightChanger.SetActive(true);
                 redLight = true;
                 return;
@@ -179,28 +194,33 @@ public class Anomalies : MonoBehaviour
     {
         poster2_Normal.SetActive(false);
         poster2_ALt.SetActive(true);
+        anomalyType = "Poster 2";
     }
     private void Poster4()
     {
         poster4_Normal.SetActive(false);
         poster4_Alt.SetActive(true);
+        anomalyType = "Poster 4";
     }
 
     private void GigaPoster()
     {
         posterSet_Normal.SetActive(false);
         posterSet_Alt.SetActive(true);
+        anomalyType = "Sizes";
     }
     private void EyePoster()
     {
         eyePoster_Normal.SetActive(false);
         eyePoster_Alt.SetActive(true);
+        anomalyType = "Eye Poster";
     }
     #endregion
     #region Enviroment
     private void CeilingDown()
     {
         StartCoroutine(LerpCeiling());
+        anomalyType = "Ceiling";
     }
     private void NoLight()
     {
