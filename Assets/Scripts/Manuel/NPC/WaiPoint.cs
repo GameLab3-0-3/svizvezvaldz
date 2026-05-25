@@ -1,33 +1,46 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaiPoint : MonoBehaviour
 {
-    public Transform[] waypoints;
-    public float speed = 2f;
-    public int currentWaypointIndex = 0;
+    public List<Transform> waypoints = new List<Transform>();  
+    public bool IsMoving;
+    public int wayPointIndex;
+    public float moveSpeed;
     public bool isLooping;
+    public float rotationSpeed;
 
+    void Start()
+    {
+        StartMoving();
+    }
+    public void StartMoving()
+    {
+        wayPointIndex = 0;
+        IsMoving = true;
+    }
     void Update()
     {
-        if (waypoints.Length == 0) return;
-
-        Vector3 destination = waypoints[currentWaypointIndex].transform.position;
-        Vector3 newPos = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
-        transform.position = newPos;
-
-        float distance = Vector3.Distance(transform.position, destination);
-        if (distance <= 0.1f)
+        if(!IsMoving)
         {
-            if(currentWaypointIndex < waypoints.Length - 1)
+            return;
+        }
+        if(wayPointIndex < waypoints.Count)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, waypoints[wayPointIndex].position, moveSpeed * Time.deltaTime);
+
+            var direction = transform.position - waypoints[wayPointIndex].position;
+            var targetRotation = Quaternion.LookRotation(-direction, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+            var distance = Vector3.Distance(transform.position, waypoints[wayPointIndex].position);
+            if(distance < 0.1f)
             {
-                currentWaypointIndex++;
-            }
-            else if (isLooping)
-            {
-                if(isLooping)
+                wayPointIndex++;
+                if(isLooping && wayPointIndex >= waypoints.Count)
                 {
-                    currentWaypointIndex = 0;
+                    wayPointIndex = 0;
                 }
             }
         }
