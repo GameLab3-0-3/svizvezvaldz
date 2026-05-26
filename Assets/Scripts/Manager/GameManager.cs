@@ -1,10 +1,20 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+
+public enum Status
+{
+    Running,
+    Pause
+}
 
 public class GameManager : MonoBehaviour
 {
+    Status state;
+    InputMap inputs;
+
     [Header("Exit")]
     [Tooltip("Questo è il trigger d'entarta, quello che ti teletrasporta alla fine del corridoio precedente")]
     public GameObject enterTrigger;
@@ -37,8 +47,54 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance = this;
+
+        inputs = new InputMap();
+        state = Status.Running;
+    }
+    private void OnEnable()
+    {
+        inputs.Enable();
+        if (state == Status.Running)
+            Running();
+        else if (state == Status.Pause)
+            Pause();
+    }
+    private void OnDisable()
+    {
+        inputs.Disable();
+    }
+
+    private void ChangeState(InputAction.CallbackContext context)
+    {
+        if (state == Status.Running)
+            Pause();
+        else if (state == Status.Pause)
+            Running();
+    }
+    public void Running()
+    {
+        state = Status.Running;
+        Time.timeScale = 1;
+        inputs.Player.Pause.started += ChangeState;
+        Cursor.lockState = CursorLockMode.Locked;
+        if (UIManager.Instance.PauseScreen == null) return;
+        UIManager.Instance.PauseScreen.SetActive(false);
+        UIManager.Instance.USureScreen.SetActive(false);
+        UIManager.Instance.RestartYBtn.SetActive(false);
+        UIManager.Instance.QuitYBtn.SetActive(false);
+    }
+    private void Pause()
+    {
+        state = Status.Pause;
+        Time.timeScale = 0;
+        inputs.Player.Pause.started += ChangeState;
+        if (UIManager.Instance.PauseScreen == null) return;
+        UIManager.Instance.PauseScreen.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
     #region TriggerZones counter
+
+
     //questa funzione viene richiamata in "Anomaly_Checks" nel trigger d'uscita per far funzionare il game Loop
     //questa funzione viene messa in "Anomaly_Checks" nel trigger d'entrata per creare una sorta di loop
     public void Loop()
@@ -102,6 +158,7 @@ public class GameManager : MonoBehaviour
 
     public void Credits()
     {
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("Credits");
     }
     #endregion

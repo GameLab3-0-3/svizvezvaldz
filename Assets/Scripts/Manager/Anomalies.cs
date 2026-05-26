@@ -76,6 +76,10 @@ public class Anomalies : MonoBehaviour
         {
             GameManager.instance.anomaly = true;
             float type = Random.Range(0, 21);
+            //switch (type)
+            //{
+            //    case 0
+            //}
             if (type <= 2.85f)
             {
                 Poster2();
@@ -255,6 +259,7 @@ public class Anomalies : MonoBehaviour
     #endregion Anomalies
     private void ResetAlt()
     {
+        anomalyType = "None";
         #region posters
         //poster 2
         poster2_Normal.SetActive(true);
@@ -265,7 +270,7 @@ public class Anomalies : MonoBehaviour
         //poster Set
         posterSet_Normal.SetActive(true);
         posterSet_Alt.SetActive(false);
-        //poster Set
+        //Eye poster
         eyePoster_Normal.SetActive(true);
         eyePoster_Alt.SetActive(false);
         #endregion
