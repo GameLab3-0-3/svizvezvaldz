@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaiPoint : MonoBehaviour
 {
     public List<Transform> waypoints = new List<Transform>();  
+    public int WayPointSparizione;
     public bool IsMoving;
     public int wayPointIndex;
     public float moveSpeed;
@@ -44,5 +45,9 @@ public class WaiPoint : MonoBehaviour
                 }
             }
         }
+        // if(wayPointIndex >= WayPointSparizione)
+        // {
+        //     gameObject.SetActive(false);
+        // }
     }
 }
