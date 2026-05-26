@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -35,12 +36,16 @@ public class GameManager : MonoBehaviour
     [Tooltip("Counter necessario per sapere quante volte il Player è entrato nell'Anomaly Chooser in modo da far funzionare il Game loop")]
     public int triggerCounter;
 
-
+    [Header("UI")]
+    [SerializeField] TMP_Text progress_Text;
+    
     public static event Action OnAltDisabled;
 
     public static GameManager instance;
     private void Awake()
     {
+        inputs = new InputMap();
+
         if (instance != null)
         {
             Destroy(instance);
@@ -48,12 +53,16 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
 
-        inputs = new InputMap();
         state = Status.Running;
     }
     private void OnEnable()
     {
+        if (inputs == null)
+        {
+            inputs = new InputMap();
+        }
         inputs.Enable();
+        inputs.Player.Pause.started += ChangeState;
         if (state == Status.Running)
             Running();
         else if (state == Status.Pause)
@@ -62,8 +71,13 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         inputs.Disable();
+        inputs.Player.Pause.started -= ChangeState;
     }
 
+    private void Update()
+    {
+        progress_Text.text = "Corridor: " + counter;
+    }
     private void ChangeState(InputAction.CallbackContext context)
     {
         if (state == Status.Running)
@@ -75,9 +89,9 @@ public class GameManager : MonoBehaviour
     {
         state = Status.Running;
         Time.timeScale = 1;
-        inputs.Player.Pause.started += ChangeState;
+        //inputs.Player.Pause.started += ChangeState;
         Cursor.lockState = CursorLockMode.Locked;
-        if (UIManager.Instance.PauseScreen == null) return;
+        if (UIManager.Instance == null || UIManager.Instance.PauseScreen == null) return;
         UIManager.Instance.PauseScreen.SetActive(false);
         UIManager.Instance.USureScreen.SetActive(false);
         UIManager.Instance.RestartYBtn.SetActive(false);
@@ -87,10 +101,10 @@ public class GameManager : MonoBehaviour
     {
         state = Status.Pause;
         Time.timeScale = 0;
-        inputs.Player.Pause.started += ChangeState;
-        if (UIManager.Instance.PauseScreen == null) return;
-        UIManager.Instance.PauseScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        //inputs.Player.Pause.started += ChangeState;
+        if (UIManager.Instance == null || UIManager.Instance.PauseScreen == null) return;
+        UIManager.Instance.PauseScreen.SetActive(true);
     }
     #region TriggerZones counter
 
@@ -107,8 +121,10 @@ public class GameManager : MonoBehaviour
         //    counter++;
         //questa ultimo controllo è per evitare, un'altra volta, che il Player possa sfruttare il tp come metodo veloce per finire il gioco. infatti se volesse ritornare indietro, il Player tornerebbe alla fine del corridoio precedente e il trigger d'uscita si riattiverebbe impedendo di andare alla fine senza aver percorso l'ultimo corridoio
         if (counter < maxCounter)
+        {
             anomalyChooser.SetActive(true);
             exitTrigger.SetActive(true);
+        }
     }
     public void UpdateChooser()
     {
