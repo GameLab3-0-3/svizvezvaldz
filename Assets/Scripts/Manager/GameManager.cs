@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum Status
 {
@@ -38,7 +39,8 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] TMP_Text progress_Text;
-    
+    [SerializeField] float duration;
+
     public static event Action OnAltDisabled;
 
     public static GameManager instance;
@@ -76,8 +78,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        //funzione di debug, da cancellare prima di consegnare la build
         progress_Text.text = "Corridor: " + counter;
     }
+
+    #region Pause_Functions
     private void ChangeState(InputAction.CallbackContext context)
     {
         if (state == Status.Running)
@@ -89,7 +94,6 @@ public class GameManager : MonoBehaviour
     {
         state = Status.Running;
         Time.timeScale = 1;
-        //inputs.Player.Pause.started += ChangeState;
         Cursor.lockState = CursorLockMode.Locked;
         if (UIManager.Instance == null || UIManager.Instance.PauseScreen == null) return;
         UIManager.Instance.PauseScreen.SetActive(false);
@@ -102,14 +106,38 @@ public class GameManager : MonoBehaviour
         state = Status.Pause;
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
-        //inputs.Player.Pause.started += ChangeState;
         if (UIManager.Instance == null || UIManager.Instance.PauseScreen == null) return;
         UIManager.Instance.PauseScreen.SetActive(true);
     }
+    #endregion
+    #region GameOver
+    public void Dead()
+    {
+        StartCoroutine(GameOver());
+    }
+    IEnumerator GameOver()
+    {
+        UIManager.Instance.blackScreen.SetActive(true);
+        float time = 0;
+        Image bSImg = UIManager.Instance.blackScreen.GetComponent<Image>();
+        Color color = bSImg.color;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float opacity = Mathf.Lerp(0f,1f, time /  duration);
+            
+            color.a = opacity;
+            bSImg.color = color;
+
+            yield return null;
+        }
+        //in alternativa sì può anche ressettare il counter al posto di ricaricare la scena
+        //counter = 0;
+        SceneManager.LoadScene("MainLvl");
+
+    }
+    #endregion
     #region TriggerZones counter
-
-
-    //questa funzione viene richiamata in "Anomaly_Checks" nel trigger d'uscita per far funzionare il game Loop
     //questa funzione viene messa in "Anomaly_Checks" nel trigger d'entrata per creare una sorta di loop
     public void Loop()
     {
@@ -158,6 +186,12 @@ public class GameManager : MonoBehaviour
         anomaly = false;
     }
 
+    //funzione assegnata alla trigger "Stairs_Trigger"
+    public void Credits()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("Credits");
+    }
     IEnumerator CorridorCounter()
     {
         counter++;
@@ -172,10 +206,5 @@ public class GameManager : MonoBehaviour
         anomaly = false;
     }
 
-    public void Credits()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        SceneManager.LoadScene("Credits");
-    }
     #endregion
 }
