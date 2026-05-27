@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     public TMP_Text Usure_Text;
     public GameObject RestartYBtn;
     public GameObject QuitYBtn;
+
+    public GameObject blackScreen;
     public static UIManager Instance;
     private void Awake()
     {

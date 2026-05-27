@@ -75,49 +75,78 @@ public class Anomalies : MonoBehaviour
         else if (anomaly > 50 && anomaly <= 100)
         {
             GameManager.instance.anomaly = true;
-            float type = Random.Range(0, 21);
-            //switch (type)
-            //{
-            //    case 0
-            //}
-            if (type <= 2.85f)
+            float type = Random.Range(0, 7);
+            switch (type)
             {
-                Poster2();
-                return;
-            }
-            else if (type > 2.85f && type <= 5.7f)
-            {
-                Poster4();
-                return;
-            }
-            else if (type > 5.7f && type <= 8.55f)
-            {
-                GigaPoster();
-                return;
-            }
-            else if (type > 8.55f && type <= 11.4f)
-            {
-                EyePoster();
-                return;
-            }
-            else if (type > 11.4f && type <= 14.25f)
-            {
-                CeilingDown();
-                return;
-            }
-            else if (type > 14.25f && type <= 17.1f)
-            {
-                anomalyType = "No Light";
-                LightChanger.SetActive(true);
-                noLight = true;
-                return;
-            }
-            else if (type > 17.1f && type < 21f)
-            {
-                anomalyType = "Red Light";
-                LightChanger.SetActive(true);
-                redLight = true;
-                return;
+                case 0:
+                    Poster2();
+                    break;
+                case 1:
+                    Poster4();
+                    break;
+                case 2:
+                    GigaPoster();
+                    break;
+                case 3:
+                    EyePoster();
+                    break;
+                case 4:
+                    CeilingDown();
+                    break;
+                case 5:
+                    anomalyType = "No Light";
+                    LightChanger.SetActive(true);
+                    noLight = true;
+                    break;
+                case 6:
+                    anomalyType = "Red Light";
+                    LightChanger.SetActive(true);
+                    redLight = true;
+                    break;
+                /*
+                case 7:
+                    Debug.Log("segnale uscita al contrario");
+                    break;
+                case 8:
+                    Debug.Log("NPC manca");
+                    break;
+                case 9:
+                    Debug.Log("NPC veloce");
+                    break;
+                case 10:
+                    Debug.Log("NPC grande");
+                    break;
+                case 11:
+                    Debug.Log("telecamere che si muovono");
+                    break;
+                case 12:
+                    Debug.Log("testa che gira");
+                    break;
+                case 13:
+                    Debug.Log("ethel");
+                    break;
+                case 14:
+                    Debug.Log("porta aperta");
+                    break;
+                case 15:
+                    Debug.Log(".");
+                    break;
+                case 16:
+                    Debug.Log("-");
+                    break;
+                case 17:
+                    Debug.Log(".-");
+                    break;
+                case 18:
+                    Debug.Log("-.");
+                    break;
+                case 19:
+                    Debug.Log(".-.");
+                    break;
+                case 20:
+                    Debug.Log("-.-");
+                    break;
+                */
             }
             /*
             else if (type == 7)
@@ -255,6 +284,10 @@ public class Anomalies : MonoBehaviour
             yield return null;
         }
         Ceiling.transform.position = targetPos;
+        if(Ceiling.transform.position == targetPos - new Vector3(0,targetPos.y -2,0))
+        {
+            GameManager.instance.Dead();
+        }
     }
     #endregion Anomalies
     private void ResetAlt()
