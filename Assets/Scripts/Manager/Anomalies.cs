@@ -103,123 +103,51 @@ public class Anomalies : MonoBehaviour
                     LightChanger.SetActive(true);
                     redLight = true;
                     break;
-                /*
-                case 7:
-                    Debug.Log("segnale uscita al contrario");
-                    break;
-                case 8:
-                    Debug.Log("NPC manca");
-                    break;
-                case 9:
-                    Debug.Log("NPC veloce");
-                    break;
-                case 10:
-                    Debug.Log("NPC grande");
-                    break;
-                case 11:
-                    Debug.Log("telecamere che si muovono");
-                    break;
-                case 12:
-                    Debug.Log("testa che gira");
-                    break;
-                case 13:
-                    Debug.Log("ethel");
-                    break;
-                case 14:
-                    Debug.Log("porta aperta");
-                    break;
-                case 15:
-                    Debug.Log(".");
-                    break;
-                case 16:
-                    Debug.Log("-");
-                    break;
-                case 17:
-                    Debug.Log(".-");
-                    break;
-                case 18:
-                    Debug.Log("-.");
-                    break;
-                case 19:
-                    Debug.Log(".-.");
-                    break;
-                case 20:
-                    Debug.Log("-.-");
-                    break;
-                */
+                    /*
+                    case 7:
+                        Debug.Log("segnale uscita al contrario");
+                        break;
+                    case 8:
+                        Debug.Log("NPC manca");
+                        break;
+                    case 9:
+                        Debug.Log("NPC veloce");
+                        break;
+                    case 10:
+                        Debug.Log("NPC grande");
+                        break;
+                    case 11:
+                        Debug.Log("telecamere che si muovono");
+                        break;
+                    case 12:
+                        Debug.Log("testa che gira");
+                        break;
+                    case 13:
+                        Debug.Log("ethel");
+                        break;
+                    case 14:
+                        Debug.Log("porta aperta");
+                        break;
+                    case 15:
+                        Debug.Log(".");
+                        break;
+                    case 16:
+                        Debug.Log("-");
+                        break;
+                    case 17:
+                        Debug.Log(".-");
+                        break;
+                    case 18:
+                        Debug.Log("-.");
+                        break;
+                    case 19:
+                        Debug.Log(".-.");
+                        break;
+                    case 20:
+                        Debug.Log("-.-");
+                        break;
+                    */
             }
-            /*
-            else if (type == 7)
-            {
-                Debug.Log("segnale uscita al contrario");
-                return;
-            }
-            else if (type == 8)
-            {
-                Debug.Log("NPC manca");
-                return;
-            }
-            else if (type == 9)
-            {
-                Debug.Log("NPC veloce");
-                return;
-            }
-            else if (type == 10)
-            {
-                Debug.Log("NPC grande");
-                return;
-            }
-            else if (type == 11)
-            {
-                Debug.Log("telecamere che si muovono");
-                return;
-            }
-            else if (type == 12)
-            {
-                Debug.Log("testa che gira");
-                return;
-            }
-            else if (type == 13)
-            {
-                Debug.Log("ethel");
-                return;
-            }
-            else if (type == 14)
-            {
-                Debug.Log("porta aperta");
-                return;
-            }
-            else if (type == 15)
-            {
-                Debug.Log(".");
-                return;
-            }
-            else if (type == 16)
-            {
-                Debug.Log("-");
-                return;
-            }
-            else if (type == 17)
-            {
-                Debug.Log(".-");
-                return;
-            }
-            else if (type == 18)
-            {
-                Debug.Log("-.");
-                return;
-            }
-            else if (type == 19)
-            {
-                Debug.Log(".-.");
-                return;
-            }
-            else if (type == 20)
-            {
-                Debug.Log("-.-");
-                return;
-            }
-            */
         }
     }
     #region posters
