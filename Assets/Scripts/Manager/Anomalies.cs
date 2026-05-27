@@ -1,11 +1,33 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Anomalies : MonoBehaviour
 {
-    public GameObject Poster2Normal;
-    public GameObject Poster2ALt;
-    public GameObject Poster4Normal;
-    public GameObject Poster4Alt;
+    [Header("Posters")]
+    [SerializeField] GameObject poster2_Normal;
+    [SerializeField] GameObject poster4_Normal;
+    [SerializeField] GameObject posterSet_Normal;
+    [SerializeField] GameObject eyePoster_Normal;
+    [Header("Alt Posters")]
+    [SerializeField] GameObject poster2_ALt;
+    [SerializeField] GameObject poster4_Alt;
+    [SerializeField] GameObject posterSet_Alt;
+    [SerializeField] GameObject eyePoster_Alt;
+    [Header("Enviroment")]
+    [SerializeField] GameObject Ceiling;
+    Vector3 originalCPos;
+    [SerializeField] GameObject LightChanger;
+    public bool noLight;
+    public bool redLight;
+    [SerializeField] Light GameLight1;
+    [SerializeField] Light GameLight2;
+    [SerializeField] Light GameLight3;
+
+    [Header("UI")]
+    [SerializeField] TMP_Text anomaly_Text;
+    string anomalyType;
+
     public static Anomalies instance;
     private void Awake()
     {
@@ -20,60 +42,84 @@ public class Anomalies : MonoBehaviour
     {
         Anomaly_Chooser.OnAnomalies += ChooseAnomaly;
         GameManager.OnAltDisabled += ResetAlt;
+        Light_Changer.OnNoLights += NoLight;
+        Light_Changer.OnRedLights += RedLight;
     }
     private void OnDisable()
     {
         Anomaly_Chooser.OnAnomalies -= ChooseAnomaly;
         GameManager.OnAltDisabled -= ResetAlt;
+        Light_Changer.OnNoLights -= NoLight;
+        Light_Changer.OnRedLights -= RedLight;
     }
 
+    private void Start()
+    {
+        originalCPos = Ceiling.transform.position;
+        anomalyType = "None";
+    }
+    private void Update()
+    {
+        anomaly_Text.text = "Anomaly: " + anomalyType;
+    }
     #region Anomalies
     private void ChooseAnomaly()
     {
         int anomaly = Random.Range(0, 101);
         Debug.Log(anomaly);
         if (anomaly <= 50)
+        {
             GameManager.instance.anomaly = false;
+            anomalyType = "None";
+        }
         else if (anomaly > 50 && anomaly <= 100)
         {
             GameManager.instance.anomaly = true;
             float type = Random.Range(0, 21);
-            if (type <= 10)
+            //switch (type)
+            //{
+            //    case 0
+            //}
+            if (type <= 2.85f)
             {
                 Poster2();
                 return;
             }
-            else if (type > 10 && type <21)
+            else if (type > 2.85f && type <= 5.7f)
             {
                 Poster4();
                 return;
             }
+            else if (type > 5.7f && type <= 8.55f)
+            {
+                GigaPoster();
+                return;
+            }
+            else if (type > 8.55f && type <= 11.4f)
+            {
+                EyePoster();
+                return;
+            }
+            else if (type > 11.4f && type <= 14.25f)
+            {
+                CeilingDown();
+                return;
+            }
+            else if (type > 14.25f && type <= 17.1f)
+            {
+                anomalyType = "No Light";
+                LightChanger.SetActive(true);
+                noLight = true;
+                return;
+            }
+            else if (type > 17.1f && type < 21f)
+            {
+                anomalyType = "Red Light";
+                LightChanger.SetActive(true);
+                redLight = true;
+                return;
+            }
             /*
-            else if (type == 2)
-            {
-                Debug.Log("poster grande");
-                return;
-            }
-            else if (type == 3)
-            {
-                Debug.Log("poster occhi");
-                return;
-            }
-            else if (type == 4)
-            {
-                Debug.Log("tetto scende");
-                return;
-            }
-            else if (type == 5)
-            {
-                Debug.Log("luci rosse");
-                return;
-            }
-            else if (type == 6)
-            {
-                Debug.Log("luci spente");
-                return;
-            }
             else if (type == 7)
             {
                 Debug.Log("segnale uscita al contrario");
@@ -147,27 +193,96 @@ public class Anomalies : MonoBehaviour
             */
         }
     }
-
+    #region posters
     private void Poster2()
     {
-        Poster2Normal.SetActive(false);
-        Poster2ALt.SetActive(true);
+        poster2_Normal.SetActive(false);
+        poster2_ALt.SetActive(true);
+        anomalyType = "Poster 2";
     }
     private void Poster4()
     {
-        Poster4Normal.SetActive(false);
-        Poster4Alt.SetActive(true);
+        poster4_Normal.SetActive(false);
+        poster4_Alt.SetActive(true);
+        anomalyType = "Poster 4";
+    }
+
+    private void GigaPoster()
+    {
+        posterSet_Normal.SetActive(false);
+        posterSet_Alt.SetActive(true);
+        anomalyType = "Sizes";
+    }
+    private void EyePoster()
+    {
+        eyePoster_Normal.SetActive(false);
+        eyePoster_Alt.SetActive(true);
+        anomalyType = "Eye Poster";
+    }
+    #endregion
+    #region Enviroment
+    private void CeilingDown()
+    {
+        StartCoroutine(LerpCeiling());
+        anomalyType = "Ceiling";
+    }
+    private void NoLight()
+    {
+        GameLight1.color = Color.black;
+        GameLight2.color = Color.black;
+        GameLight3.color = Color.black;
+    }
+    private void RedLight()
+    {
+        GameLight1.color = Color.red;
+        GameLight2.color = Color.red;
+        GameLight3.color = Color.red;
+    }
+    #endregion
+
+    IEnumerator LerpCeiling()
+    {
+        Vector3 startPos = Ceiling.transform.position;
+        Vector3 targetPos = new(originalCPos.x, 2, originalCPos.z);
+
+        float duration = 10f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            Ceiling.transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        Ceiling.transform.position = targetPos;
     }
     #endregion Anomalies
     private void ResetAlt()
     {
-        #region poster2/4
+        anomalyType = "None";
+        #region posters
         //poster 2
-        Poster2Normal.SetActive(true);
-        Poster2ALt.SetActive(false);
+        poster2_Normal.SetActive(true);
+        poster2_ALt.SetActive(false);
         //poster 4
-        Poster4Normal.SetActive(true);
-        Poster4Alt.SetActive(false);
+        poster4_Normal.SetActive(true);
+        poster4_Alt.SetActive(false);
+        //poster Set
+        posterSet_Normal.SetActive(true);
+        posterSet_Alt.SetActive(false);
+        //Eye poster
+        eyePoster_Normal.SetActive(true);
+        eyePoster_Alt.SetActive(false);
+        #endregion
+        #region Enviroment
+        StopAllCoroutines();
+        Ceiling.transform.position = originalCPos;
+        LightChanger.SetActive(false);
+        noLight = false;
+        redLight = false;
+        GameLight1.color = Color.white;
+        GameLight2.color = Color.white;
+        GameLight3.color = Color.white;
         #endregion
     }
 }
