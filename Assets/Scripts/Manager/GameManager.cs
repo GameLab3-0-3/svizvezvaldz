@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text progress_Text;
     [SerializeField] float duration;
 
+    [Header("Sounds")]
+    [SerializeField] AudioClip bgSound;
     public static event Action OnAltDisabled;
 
     public static GameManager instance;
@@ -56,6 +58,11 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         state = Status.Running;
+    }
+    private void Start()
+    {
+        StartCoroutine(BgMusic());
+        
     }
     private void OnEnable()
     {
@@ -205,6 +212,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         anomaly = false;
     }
-
     #endregion
+    IEnumerator BgMusic()
+    {
+        while (true)
+        {
+            SoundManager.instance.PlaySfx(bgSound);
+            
+
+            yield return new WaitForSeconds(4.85f);
+        }
+    }
 }
