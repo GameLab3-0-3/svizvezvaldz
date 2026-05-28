@@ -18,13 +18,13 @@ public class GameManager : MonoBehaviour
     InputMap inputs;
 
     [Header("Exit")]
-    [Tooltip("Questo è il trigger d'entarta, quello che ti teletrasporta alla fine del corridoio precedente")]
+    [Tooltip("Questo ï¿½ il trigger d'entarta, quello che ti teletrasporta alla fine del corridoio precedente")]
     public GameObject enterTrigger;
-    [Tooltip("Questo è il trigger d'uscita, quello che ti teletrasporta all'inizio del corridoio successivo")]
+    [Tooltip("Questo ï¿½ il trigger d'uscita, quello che ti teletrasporta all'inizio del corridoio successivo")]
     public GameObject exitTrigger;
-    [Tooltip("Questo è il trigger che decide se andare avanti o dietro, attivva/disattiva il bool, decide quale anomalia deve esserci (se il bool è attivo) e ti teletrasporta all'entrata se torni indietro")]
+    [Tooltip("Questo ï¿½ il trigger che decide se andare avanti o dietro, attivva/disattiva il bool, decide quale anomalia deve esserci (se il bool ï¿½ attivo) e ti teletrasporta all'entrata se torni indietro")]
     public GameObject anomalyChooser;
-    [Tooltip("questa è la light source che si attiva una volta che sei passato x volte (dove x è il maxCounter), funziona come trigger per i titoli di coda")]
+    [Tooltip("questa ï¿½ la light source che si attiva una volta che sei passato x volte (dove x ï¿½ il maxCounter), funziona come trigger per i titoli di coda")]
     public GameObject lightSource;
     [Tooltip("bool utilizzato per far sapere al gioco se o meno nel corridoio ci sono anomalie")]
     public bool anomaly;
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public float maxCounter;
     [Tooltip("Counter che aumenta nel caso in cui andiamo nella direzione giusta, si resetta se sbagliamo, e disattiva il trigger in fondo per permettere al giocatore di finire il gioco")]
     public float counter;
-    [Tooltip("Counter necessario per sapere quante volte il Player è entrato nell'Anomaly Chooser in modo da far funzionare il Game loop")]
+    [Tooltip("Counter necessario per sapere quante volte il Player ï¿½ entrato nell'Anomaly Chooser in modo da far funzionare il Game loop")]
     public int triggerCounter;
 
     [Header("UI")]
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         //funzione di debug, da cancellare prima di consegnare la build
-        progress_Text.text = "Corridor: " + counter;
+        progress_Text.text = counter.ToString();
     }
 
     #region Pause_Functions
@@ -122,13 +122,13 @@ public class GameManager : MonoBehaviour
     //questa funzione viene messa in "Anomaly_Checks" nel trigger d'entrata per creare una sorta di loop
     public void Loop()
     {
-        //se il counter è maggiore di 0 e non è presente nessuna anomalia il counter scende di uno, impedendo al Player di sfruttare il tp come metodo di fine veloce, sostanzialmente creando di fatto il loop
+        //se il counter ï¿½ maggiore di 0 e non ï¿½ presente nessuna anomalia il counter scende di uno, impedendo al Player di sfruttare il tp come metodo di fine veloce, sostanzialmente creando di fatto il loop
         if (counter >= 0 && !anomaly)
             counter--;
-        //altrimenti se è presente un'anomalia il counter aumenta (questa parte è da spostare nel trigger "anomalyChooser" per finalizzare il game loop)
+        //altrimenti se ï¿½ presente un'anomalia il counter aumenta (questa parte ï¿½ da spostare nel trigger "anomalyChooser" per finalizzare il game loop)
         //else if (counter > 0 && anomaly)
         //    counter++;
-        //questa ultimo controllo è per evitare, un'altra volta, che il Player possa sfruttare il tp come metodo veloce per finire il gioco. infatti se volesse ritornare indietro, il Player tornerebbe alla fine del corridoio precedente e il trigger d'uscita si riattiverebbe impedendo di andare alla fine senza aver percorso l'ultimo corridoio
+        //questa ultimo controllo ï¿½ per evitare, un'altra volta, che il Player possa sfruttare il tp come metodo veloce per finire il gioco. infatti se volesse ritornare indietro, il Player tornerebbe alla fine del corridoio precedente e il trigger d'uscita si riattiverebbe impedendo di andare alla fine senza aver percorso l'ultimo corridoio
         if (counter < maxCounter)
         {
             anomalyChooser.SetActive(true);
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(CorridorCounter());
             OnAltDisabled?.Invoke();
         }
-        //se non è presente un'anomalia resetta il counter (skill issue negro)
+        //se non ï¿½ presente un'anomalia resetta il counter (skill issue negro)
         else
         {
             counter = 0;
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(CorridorCounter());
         }
-        //se è presente un'anomalia resetta il counter (skill issue negro)
+        //se ï¿½ presente un'anomalia resetta il counter (skill issue negro)
         else
         {
             counter = 0;
@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
 
             yield return null;
         }
-        //in alternativa sì può anche ressettare il counter al posto di ricaricare la scena
+        //in alternativa sï¿½ puï¿½ anche ressettare il counter al posto di ricaricare la scena
         //counter = 0;
         SceneManager.LoadScene("MainLvl");
 
