@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
     public void Loop()
     {
         //se il counter è maggiore di 0 e non è presente nessuna anomalia il counter scende di uno, impedendo al Player di sfruttare il tp come metodo di fine veloce, sostanzialmente creando di fatto il loop
-        if (counter > 0 && !anomaly)
+        if (counter >= 0 && !anomaly)
             counter--;
         //altrimenti se è presente un'anomalia il counter aumenta (questa parte è da spostare nel trigger "anomalyChooser" per finalizzare il game loop)
         //else if (counter > 0 && anomaly)
