@@ -12195,17 +12195,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 971864662060576763, guid: 1c5062f68c47b01498f5c4e8348f228c, type: 3}
-      propertyPath: 'waypoints.Array.data[7]'
-      value: 
-      objectReference: {fileID: 1510895442}
     - target: {fileID: 1161054231934834029, guid: 1c5062f68c47b01498f5c4e8348f228c, type: 3}
       propertyPath: m_Name
       value: NPC
-      objectReference: {fileID: 0}
-    - target: {fileID: 2597182381902738007, guid: 1c5062f68c47b01498f5c4e8348f228c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -78.19
       objectReference: {fileID: 0}
     - target: {fileID: 9196441048456482972, guid: 1c5062f68c47b01498f5c4e8348f228c, type: 3}
       propertyPath: m_LocalPosition.x
