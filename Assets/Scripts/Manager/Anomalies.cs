@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Anomalies : MonoBehaviour
 {
+    public float timer;
+    public bool NPCDeactivation;
     [Header("Posters")]
     [SerializeField] GameObject poster2_Normal;
     [SerializeField] GameObject poster4_Normal;
@@ -60,6 +62,10 @@ public class Anomalies : MonoBehaviour
     }
     private void Update()
     {
+        if(anomalyType == "NPC manca")
+        {
+            timer += Time.deltaTime;
+        }
         anomaly_Text.text = "Anomaly: " + anomalyType;
     }
     #region Anomalies
@@ -75,7 +81,7 @@ public class Anomalies : MonoBehaviour
         else if (anomaly > 25 && anomaly <= 100)
         {
             GameManager.instance.anomaly = true;
-            float type = Random.Range(0, 7);
+            float type = Random.Range(0, 8);
             switch (type)
             {
                 case 0:
@@ -107,10 +113,11 @@ public class Anomalies : MonoBehaviour
                     anomalyType = "Poster mancanti";
                     MissingPoster();
                     break;
+                case 8:
+                    anomalyType = "NPC manca";
+                    NPCMissing();
+                    break;
                     /*
-                    case 8:
-                        anomalyType = "NPC manca";
-                        break;
                     case 9:
                         Debug.Log("NPC veloce");
                         break;
@@ -221,6 +228,13 @@ public class Anomalies : MonoBehaviour
             GameManager.instance.Dead();
         }
     }
+    #region NPC
+    private void NPCMissing()
+    {
+        NPCDeactivation = true;
+        
+    }
+    #endregion
     #endregion Anomalies
     private void ResetAlt()
     {
@@ -248,6 +262,9 @@ public class Anomalies : MonoBehaviour
         GameLight1.color = Color.white;
         GameLight2.color = Color.white;
         GameLight3.color = Color.white;
+        #endregion
+        #region NPC
+        NPCDeactivation = false;
         #endregion
     }
 }

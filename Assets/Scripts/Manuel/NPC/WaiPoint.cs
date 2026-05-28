@@ -14,16 +14,20 @@ public class WaiPoint : MonoBehaviour
     public Animator animator;
     public static WaiPoint Instance { get; private set; }
 
-    void Start()
+    void Awake()
     {
-        StartMoving();
-        animator = GetComponent<Animator>();
         if(Instance != null)
         {
             Destroy(Instance);
             return;
         }
             Instance = this;
+    }
+    void Start()
+    {
+        StartMoving();
+        animator = GetComponent<Animator>();
+        
     }
     public void StartMoving()
     {
