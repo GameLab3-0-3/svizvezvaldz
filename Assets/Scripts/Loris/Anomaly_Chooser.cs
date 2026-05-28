@@ -13,7 +13,12 @@ public class Anomaly_Chooser : MonoBehaviour
     [Tooltip("Distanza di sicurezza per evitare che il Player venga loopato dentro le TriggerZone")]
     public float tpOffset;
 
+
     public static event Action OnAnomalies;
+    private void Start()
+    {
+        GameManager.instance.spawnPoint = GameManager.instance.Index0.transform.position;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,6 +27,9 @@ public class Anomaly_Chooser : MonoBehaviour
             if (GameManager.instance.triggerCounter == 0)
             {
                 OnAnomalies?.Invoke();
+                GameManager.instance.NPC.SetActive(true);
+                GameManager.instance.NPC.transform.position = GameManager.instance.spawnPoint;
+                WaiPoint.Instance.wayPointIndex = 0;
             }
             GameManager.instance.triggerCounter++;
             Vector3 relativePos = Player.transform.position - transform.position;
@@ -39,5 +47,9 @@ public class Anomaly_Chooser : MonoBehaviour
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(transform.position, transform.localScale);
+    }
+    private void NPCActivation()
+    {
+        GameManager.instance.NPC.SetActive(false);
     }
 }

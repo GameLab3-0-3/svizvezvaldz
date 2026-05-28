@@ -12,11 +12,18 @@ public class WaiPoint : MonoBehaviour
     public bool isLooping;
     public float rotationSpeed;
     public Animator animator;
+    public static WaiPoint Instance { get; private set; }
 
     void Start()
     {
         StartMoving();
         animator = GetComponent<Animator>();
+        if(Instance != null)
+        {
+            Destroy(Instance);
+            return;
+        }
+            Instance = this;
     }
     public void StartMoving()
     {

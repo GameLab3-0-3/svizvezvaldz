@@ -43,6 +43,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Sounds")]
     [SerializeField] AudioClip bgSound;
+
+    [Header("NPC")]
+    public GameObject NPC;
+    public GameObject Index0;
+    public Vector3 spawnPoint;
+
     public static event Action OnAltDisabled;
 
     public static GameManager instance;
@@ -137,6 +143,7 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateChooser()
     {
+        NPCActivation();
         //se sono presenti anomalie il trigger ti aumenta il counter e nel caso in cui il counter raggiunge il massimo disattiva l'uscita
         if (anomaly)
         {
@@ -152,6 +159,7 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateCounter()
     {
+        NPCActivation();
         triggerCounter = 0;
         //se non sono presenti anomalie il trigger ti aumenta il counter e nel caso in cui il counter raggiunge il massimo disattiva l'uscita
         if (!anomaly)
@@ -223,5 +231,10 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitForSeconds(4.85f);
         }
+    }
+    private void NPCActivation()
+    {
+        NPC.SetActive(false);
+        NPC.transform.position = spawnPoint;
     }
 }
