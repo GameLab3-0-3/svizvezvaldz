@@ -50,7 +50,7 @@ public class Anomalies : MonoBehaviour
         Anomaly_Chooser.OnAnomalies -= ChooseAnomaly;
         GameManager.OnAltDisabled -= ResetAlt;
         Light_Changer.OnNoLights -= NoLight;
-        Light_Changer.OnRedLights -= RedLight;
+        Light_Changer.OnRedLights -= RedLight;;
     }
 
     private void Start()
@@ -75,7 +75,7 @@ public class Anomalies : MonoBehaviour
         else if (anomaly > 25 && anomaly <= 100)
         {
             GameManager.instance.anomaly = true;
-            float type = Random.Range(0, 8);
+            float type = Random.Range(0, 7);
             switch (type)
             {
                 case 0:
@@ -109,7 +109,7 @@ public class Anomalies : MonoBehaviour
                     break;
                     /*
                     case 8:
-                        Debug.Log("NPC manca");
+                        anomalyType = "NPC manca";
                         break;
                     case 9:
                         Debug.Log("NPC veloce");
