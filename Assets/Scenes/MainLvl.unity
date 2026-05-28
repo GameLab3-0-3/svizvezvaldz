@@ -124,6 +124,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8571408888199340021, guid: 1c5062f68c47b01498f5c4e8348f228c, type: 3}
   m_PrefabInstance: {fileID: 6012850465898688624}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &99086090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2816125301201688226, guid: 1c5062f68c47b01498f5c4e8348f228c, type: 3}
+  m_PrefabInstance: {fileID: 6012850465898688624}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &102043048 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7019016796065162426, guid: 5a4c774901076a344af69e85c4e2c1a7, type: 3}
@@ -3958,7 +3963,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Anomalies
   timer: 0
-  NPCActivate: 0
+  NPCDeactivation: 0
+  NPCHead: {fileID: 99086090}
   poster2_Normal: {fileID: 756489784}
   poster4_Normal: {fileID: 1493068536}
   posterSet_Normal: {fileID: 1628686931}
@@ -12424,7 +12430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8571408888199340021, guid: 1c5062f68c47b01498f5c4e8348f228c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9196441048456482972, guid: 1c5062f68c47b01498f5c4e8348f228c, type: 3}
       propertyPath: m_LocalPosition.x

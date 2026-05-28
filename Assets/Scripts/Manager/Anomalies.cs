@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Anomalies : MonoBehaviour
 {
+    [Header("npc")]
     public float timer;
     public bool NPCDeactivation;
+    public GameObject NPCHead;
     [Header("Posters")]
     [SerializeField] GameObject poster2_Normal;
     [SerializeField] GameObject poster4_Normal;
@@ -81,7 +83,7 @@ public class Anomalies : MonoBehaviour
         else if (anomaly > 25 && anomaly <= 100)
         {
             GameManager.instance.anomaly = true;
-            float type = Random.Range(0, 8);
+            float type = Random.Range(9, 9);
             switch (type)
             {
                 case 0:
@@ -117,10 +119,11 @@ public class Anomalies : MonoBehaviour
                     anomalyType = "NPC manca";
                     NPCMissing();
                     break;
+                case 9:
+                    anomalyType = "NPC BIGHEAD";
+                    BIGHEAD();
+                    break;
                     /*
-                    case 9:
-                        Debug.Log("NPC veloce");
-                        break;
                     case 10:
                         Debug.Log("NPC grande");
                         break;
@@ -234,6 +237,12 @@ public class Anomalies : MonoBehaviour
         NPCDeactivation = true;
         
     }
+    #region NPC testa
+    private void BIGHEAD()
+    {
+        NPCHead.transform.localScale = new Vector3(0.0199999996f, 0.0199999996f, 0.0199999996f);
+    }
+    #endregion
     #endregion
     #endregion Anomalies
     private void ResetAlt()
@@ -265,6 +274,7 @@ public class Anomalies : MonoBehaviour
         #endregion
         #region NPC
         NPCDeactivation = false;
+        NPCHead.transform.localScale = new Vector3(0.00775404554f, 0.00342674972f, 0.00701166457f);
         #endregion
     }
 }
