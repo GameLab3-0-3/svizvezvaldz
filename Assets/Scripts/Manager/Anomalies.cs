@@ -50,7 +50,7 @@ public class Anomalies : MonoBehaviour
         Anomaly_Chooser.OnAnomalies -= ChooseAnomaly;
         GameManager.OnAltDisabled -= ResetAlt;
         Light_Changer.OnNoLights -= NoLight;
-        Light_Changer.OnRedLights -= RedLight;
+        Light_Changer.OnRedLights -= RedLight;;
     }
 
     private void Start()
@@ -67,12 +67,12 @@ public class Anomalies : MonoBehaviour
     {
         int anomaly = Random.Range(0, 101);
         Debug.Log(anomaly);
-        if (anomaly <= 50)
+        if (anomaly <= 25)
         {
             GameManager.instance.anomaly = false;
             anomalyType = "None";
         }
-        else if (anomaly > 50 && anomaly <= 100)
+        else if (anomaly > 25 && anomaly <= 100)
         {
             GameManager.instance.anomaly = true;
             float type = Random.Range(0, 7);
@@ -103,12 +103,13 @@ public class Anomalies : MonoBehaviour
                     LightChanger.SetActive(true);
                     redLight = true;
                     break;
+                case 7:
+                    anomalyType = "Poster mancanti";
+                    MissingPoster();
+                    break;
                     /*
-                    case 7:
-                        Debug.Log("segnale uscita al contrario");
-                        break;
                     case 8:
-                        Debug.Log("NPC manca");
+                        anomalyType = "NPC manca";
                         break;
                     case 9:
                         Debug.Log("NPC veloce");
@@ -129,7 +130,7 @@ public class Anomalies : MonoBehaviour
                         Debug.Log("porta aperta");
                         break;
                     case 15:
-                        Debug.Log(".");
+                        Debug.Log("segnale uscita al contrario");
                         break;
                     case 16:
                         Debug.Log("-");
@@ -163,7 +164,6 @@ public class Anomalies : MonoBehaviour
         poster4_Alt.SetActive(true);
         anomalyType = "Poster 4";
     }
-
     private void GigaPoster()
     {
         posterSet_Normal.SetActive(false);
@@ -175,6 +175,10 @@ public class Anomalies : MonoBehaviour
         eyePoster_Normal.SetActive(false);
         eyePoster_Alt.SetActive(true);
         anomalyType = "Eye Poster";
+    }
+    private void MissingPoster()
+    {
+        posterSet_Normal.SetActive(false);
     }
     #endregion
     #region Enviroment
@@ -212,7 +216,7 @@ public class Anomalies : MonoBehaviour
             yield return null;
         }
         Ceiling.transform.position = targetPos;
-        if(Ceiling.transform.position == targetPos - new Vector3(0,targetPos.y -2,0))
+        if (Ceiling.transform.position == targetPos - new Vector3(0, targetPos.y - 2, 0))
         {
             GameManager.instance.Dead();
         }

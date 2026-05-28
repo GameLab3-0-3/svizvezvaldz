@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text progress_Text;
     [SerializeField] float duration;
 
+    [Header("Sounds")]
+    [SerializeField] AudioClip bgSound;
     public static event Action OnAltDisabled;
 
     public static GameManager instance;
@@ -56,6 +58,11 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         state = Status.Running;
+    }
+    private void Start()
+    {
+        StartCoroutine(BgMusic());
+        
     }
     private void OnEnable()
     {
@@ -110,33 +117,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.PauseScreen.SetActive(true);
     }
     #endregion
-    #region GameOver
-    public void Dead()
-    {
-        StartCoroutine(GameOver());
-    }
-    IEnumerator GameOver()
-    {
-        UIManager.Instance.blackScreen.SetActive(true);
-        float time = 0;
-        Image bSImg = UIManager.Instance.blackScreen.GetComponent<Image>();
-        Color color = bSImg.color;
-        while (time < duration)
-        {
-            time += Time.deltaTime;
-            float opacity = Mathf.Lerp(0f,1f, time /  duration);
-            
-            color.a = opacity;
-            bSImg.color = color;
-
-            yield return null;
-        }
-        //in alternativa sì può anche ressettare il counter al posto di ricaricare la scena
-        //counter = 0;
-        SceneManager.LoadScene("MainLvl");
-
-    }
-    #endregion
+    
     #region TriggerZones counter
     //questa funzione viene messa in "Anomaly_Checks" nel trigger d'entrata per creare una sorta di loop
     public void Loop()
@@ -205,6 +186,42 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         anomaly = false;
     }
-
     #endregion
+    #region GameOver
+    public void Dead()
+    {
+        StartCoroutine(GameOver());
+    }
+    IEnumerator GameOver()
+    {
+        UIManager.Instance.blackScreen.SetActive(true);
+        float time = 0;
+        Image bSImg = UIManager.Instance.blackScreen.GetComponent<Image>();
+        Color color = bSImg.color;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float opacity = Mathf.Lerp(0f, 1f, time / duration);
+
+            color.a = opacity;
+            bSImg.color = color;
+
+            yield return null;
+        }
+        //in alternativa sì può anche ressettare il counter al posto di ricaricare la scena
+        //counter = 0;
+        SceneManager.LoadScene("MainLvl");
+
+    }
+    #endregion
+    IEnumerator BgMusic()
+    {
+        while (true)
+        {
+            SoundManager.instance.PlaySfx(bgSound);
+            
+
+            yield return new WaitForSeconds(4.85f);
+        }
+    }
 }
