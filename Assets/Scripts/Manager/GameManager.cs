@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
     public GameObject Index0;
     public Vector3 spawnPoint;
 
+    public GameObject Player;
+
     public static event Action OnAltDisabled;
 
     public static GameManager instance;

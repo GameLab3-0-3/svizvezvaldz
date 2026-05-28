@@ -352,10 +352,38 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7043476823195445260, guid: 8873c8e53d4a5a741a7e3d135178dcff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2335369d16130174e8bf2a87b5695c02, type: 2}
+    - target: {fileID: -5919606088814778230, guid: 8873c8e53d4a5a741a7e3d135178dcff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ce02df1573e5774ab4daa8d3e7e1a64, type: 2}
+    - target: {fileID: -4767782830786195710, guid: 8873c8e53d4a5a741a7e3d135178dcff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ce02df1573e5774ab4daa8d3e7e1a64, type: 2}
+    - target: {fileID: -4767782830786195710, guid: 8873c8e53d4a5a741a7e3d135178dcff, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ce02df1573e5774ab4daa8d3e7e1a64, type: 2}
     - target: {fileID: 919132149155446097, guid: 8873c8e53d4a5a741a7e3d135178dcff, type: 3}
       propertyPath: m_Name
       value: npc_exit8_anitest
       objectReference: {fileID: 0}
+    - target: {fileID: 4231583580590166244, guid: 8873c8e53d4a5a741a7e3d135178dcff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f96c591da41ad5149a901cd05aa3857a, type: 2}
+    - target: {fileID: 6164996480583612547, guid: 8873c8e53d4a5a741a7e3d135178dcff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b02f9fae96525ac42bf6bac0a8308451, type: 2}
+    - target: {fileID: 9016391052771412136, guid: 8873c8e53d4a5a741a7e3d135178dcff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2335369d16130174e8bf2a87b5695c02, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -398,7 +426,7 @@ MonoBehaviour:
   WayPointIdle: 7
   IsMoving: 0
   wayPointIndex: 0
-  moveSpeed: 15
+  moveSpeed: 7
   isLooping: 0
   rotationSpeed: 10
   animator: {fileID: 3218794410678945527}

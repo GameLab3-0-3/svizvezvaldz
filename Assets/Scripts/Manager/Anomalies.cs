@@ -7,6 +7,7 @@ public class Anomalies : MonoBehaviour
     [Header("npc")]
     public float timer;
     public bool NPCDeactivation;
+    public bool NPCHeadSPINNING;
     public GameObject NPCHead;
     [Header("Posters")]
     [SerializeField] GameObject poster2_Normal;
@@ -18,8 +19,10 @@ public class Anomalies : MonoBehaviour
     [SerializeField] GameObject poster4_Alt;
     [SerializeField] GameObject posterSet_Alt;
     [SerializeField] GameObject eyePoster_Alt;
+    [SerializeField] GameObject ExitPoster;
     [Header("Enviroment")]
     [SerializeField] GameObject Ceiling;
+    [SerializeField] GameObject CameraALT1, CameraALT2;
     Vector3 originalCPos;
     [SerializeField] GameObject LightChanger;
     public bool noLight;
@@ -69,12 +72,15 @@ public class Anomalies : MonoBehaviour
             timer += Time.deltaTime;
         }
         anomaly_Text.text = "Anomaly: " + anomalyType;
+        if(NPCHeadSPINNING == true)
+        {
+            NPCHead.transform.Rotate(0, 0, 360 * Time.deltaTime);
+        }
     }
     #region Anomalies
     private void ChooseAnomaly()
     {
         int anomaly = Random.Range(0, 101);
-        Debug.Log(anomaly);
         if (anomaly <= 25)
         {
             GameManager.instance.anomaly = false;
@@ -83,7 +89,7 @@ public class Anomalies : MonoBehaviour
         else if (anomaly > 25 && anomaly <= 100)
         {
             GameManager.instance.anomaly = true;
-            float type = Random.Range(9, 9);
+            float type = Random.Range(0, 13);
             switch (type)
             {
                 case 0:
@@ -123,25 +129,30 @@ public class Anomalies : MonoBehaviour
                     anomalyType = "NPC BIGHEAD";
                     BIGHEAD();
                     break;
+                case 10:
+                    anomalyType = "NPC fast";
+                    FAST();
+                    break;
+                case 11:
+                    anomalyType = "NPC HEAD SPINNING";
+                    NPCHeadSPINNING = true;
+                    break;
+                case 12:
+                    anomalyType = "Segnale uscita al contrario";
+                    ExitPosterRotate();
+                    break;
+                case 13:
+                    anomalyType = "telecamere che si muovono";
+                    CamerasALT();
+                    break;
                     /*
-                    case 10:
-                        Debug.Log("NPC grande");
-                        break;
-                    case 11:
-                        Debug.Log("telecamere che si muovono");
-                        break;
-                    case 12:
-                        Debug.Log("testa che gira");
-                        break;
                     case 13:
                         Debug.Log("ethel");
                         break;
                     case 14:
                         Debug.Log("porta aperta");
                         break;
-                    case 15:
-                        Debug.Log("segnale uscita al contrario");
-                        break;
+                    
                     case 16:
                         Debug.Log("-");
                         break;
@@ -190,6 +201,10 @@ public class Anomalies : MonoBehaviour
     {
         posterSet_Normal.SetActive(false);
     }
+    private void ExitPosterRotate()
+    {
+        ExitPoster.transform.Rotate(0, 180, 0);
+    }
     #endregion
     #region Enviroment
     private void CeilingDown()
@@ -208,6 +223,11 @@ public class Anomalies : MonoBehaviour
         GameLight1.color = Color.red;
         GameLight2.color = Color.red;
         GameLight3.color = Color.red;
+    }
+    private void CamerasALT()
+    {
+        CameraALT1.SetActive(true);
+        CameraALT2.SetActive(true);
     }
     #endregion
 
@@ -242,6 +262,10 @@ public class Anomalies : MonoBehaviour
     {
         NPCHead.transform.localScale = new Vector3(0.0199999996f, 0.0199999996f, 0.0199999996f);
     }
+    private void FAST()
+    {
+        WaiPoint.Instance.moveSpeed = 15;
+    }
     #endregion
     #endregion
     #endregion Anomalies
@@ -261,6 +285,7 @@ public class Anomalies : MonoBehaviour
         //Eye poster
         eyePoster_Normal.SetActive(true);
         eyePoster_Alt.SetActive(false);
+        ExitPoster.transform.rotation = Quaternion.Euler(0, -90, 0);
         #endregion
         #region Enviroment
         StopAllCoroutines();
@@ -271,10 +296,14 @@ public class Anomalies : MonoBehaviour
         GameLight1.color = Color.white;
         GameLight2.color = Color.white;
         GameLight3.color = Color.white;
+        CameraALT1.SetActive(false);
+        CameraALT2.SetActive(false);
         #endregion
         #region NPC
         NPCDeactivation = false;
         NPCHead.transform.localScale = new Vector3(0.00775404554f, 0.00342674972f, 0.00701166457f);
+        WaiPoint.Instance.moveSpeed = 7;
+        NPCHeadSPINNING = false;
         #endregion
     }
 }
