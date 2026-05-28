@@ -5,16 +5,18 @@ using UnityEngine;
 public class WaiPoint : MonoBehaviour
 {
     public List<Transform> waypoints = new List<Transform>();  
-    public int WayPointSparizione;
+    public int WayPointIdle;
     public bool IsMoving;
     public int wayPointIndex;
     public float moveSpeed;
     public bool isLooping;
     public float rotationSpeed;
+    public Animator animator;
 
     void Start()
     {
         StartMoving();
+        animator = GetComponent<Animator>();
     }
     public void StartMoving()
     {
@@ -45,9 +47,17 @@ public class WaiPoint : MonoBehaviour
                 }
             }
         }
-        // if(wayPointIndex >= WayPointSparizione)
-        // {
-        //     gameObject.SetActive(false);
-        // }
+        if(wayPointIndex >= WayPointIdle)
+        {
+            //animator.speed = 0;
+            animator.SetBool("idle", true);
+            animator.SetBool("walk", false);
+        }
+        else if ( wayPointIndex <= WayPointIdle)
+        {
+            //animator.speed = 1;
+            animator.SetBool("idle", false);
+            animator.SetBool("walk", true);
+        }
     }
 }
